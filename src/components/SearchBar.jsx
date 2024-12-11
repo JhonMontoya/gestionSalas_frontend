@@ -2,8 +2,6 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import "./components.css"
-
 const options = ['Sala 1', 'Sala 2'];
 
 
@@ -24,7 +22,7 @@ export default function SearchBar() {
             }}
             id="controllable-states-demo"
             options={options}
-            sx={{ width: 400}}
+            sx={{ width: 200, marginRight: -10}}
             renderInput={(params) => <TextField {...params} label="Busqueda por salas" />}
         />
     </div>
