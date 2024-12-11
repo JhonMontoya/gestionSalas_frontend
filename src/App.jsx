@@ -1,132 +1,89 @@
-import {useState} from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importa Bootstrap (opcional, ya está en App)
+import { useState, useEffect } from 'react';
 
-function App()  {
-  const [usuarioActual, setUsuarioActual] = useState(null);
-  const [salas, setSalas] = useState([ 
-    { id: 1, nombre: "Sala A", capacidad: 80, ubicacion: "Norte", estado: "activa", reservas: [] },
-    { id: 2, nombre: "Sala B", capacidad: 150, ubicacion: "Centro", estado: "activa", reservas: [] },
-    { id: 3, nombre: "Sala C", capacidad: 180, ubicacion: "Sur", estado: "activa", reservas: [] },
- ]); 
-  const [formReserva, setFormReserva] = useState({
-    celular: "",
-    salaId: "",
-    fecha: "",
-    hora: "",
-  });
+const App = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    const email = e.target.loginEmail.value;
-    const nombre = e.target.loginNombre.value;
+  const images = [
+    { 
+      url: 'https://images.pexels.com/photos/16120232/pexels-photo-16120232/free-photo-of-mesas-diseno-interior-lugar-de-un-evento.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 
+      alt: 'Sala de eventos'
+    },
+    { 
+      url: 'https://www.optixapp.com/wp-content/uploads/2023/09/Koworks-Coworking-Meeting-Room.webp', 
+      alt: 'Sala de coworking'
+    },
+    { 
+      url: 'https://images.pexels.com/photos/1708936/pexels-photo-1708936.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 
+      alt: 'Sala de reuniones'
+    },
+  ];
 
-    setUsuarioActual({ email, nombre });
-    setFormReserva((prev) => ({ ...prev, salaId: salas[0]?.id || "" }));
+  const handleImageClick = (index) => {
+    setActiveIndex(index);
+    window.open('/reservas', '_blank');
   };
 
-  const handleReservaSubmit = (e) => {
-    e.preventDefault();
-
-    const { celular, salaId, fecha, hora } = formReserva;
-    const sala = salas.find((s) => s.id === parseInt(salaId));
-
-    if (sala.reservas.some((r) => r.fecha === fecha && r.hora === hora)) {
-      alert("La sala ya está reservada en la fecha y hora seleccionadas.");
-      return;
-    }
-
-    const nuevaReserva = { nombre: usuarioActual.nombre, celular, fecha, hora };
-    const nuevasSalas = salas.map((s) =>
-      s.id === parseInt(salaId) ? { ...s, reservas: [...s.reservas, nuevaReserva] } : s
-    );
-
-    setSalas(nuevasSalas);
-    alert(`Reserva realizada: Sala ${sala.nombre}, el ${fecha} a las ${hora}.`);
-    setFormReserva({ celular: "", salaId: "", fecha: "", hora: "" });
+  const handleNextClick = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  const handleReservaChange = (e) => {
-    setFormReserva((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handlePrevClick = () => {
+    setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      handleNextClick();
+    }, 15000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
-    <div className="container py-5">
-      {!usuarioActual ? (
-        <div className="card mx-auto shadow-lg mb-5">
-          <div className="card-body">
-            <h1 className="card-title text-center mb-4">Iniciar Sesión</h1>
-            <form onSubmit={handleLoginSubmit}>
-              <div className="mb-3">
-                <label htmlFor="loginEmail" className="form-label">Email</label>
-                <input type="email" className="form-control" id="loginEmail" required />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="loginNombre" className="form-label">Nombre Completo</label>
-                <input type="text" className="form-control" id="loginNombre" required />
-              </div>
-              <div className="d-grid">
-                <button type="submit" className="btn btn-primary">Iniciar Sesión</button>
-              </div>
-            </form>
+    <div className="flex flex-col h-screen">
+      {/* Navbar */}
+      <nav className="flex justify-between items-center bg-blue-500 text-white p-4">
+        <div className="flex items-center">
+          <img src="../img/Logo.png" alt="logo" className='w-14' />
+        </div>
+        <input
+          type="search"
+          placeholder="Buscar salas"
+          className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2 pl-10 text-lg border border-gray-200 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
+        />
+        <div className="flex items-center">
+          <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg mr-2">
+            Iniciar sesión
+          </button>
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
+            Registrarse
+          </button>
+        </div>
+      </nav>
+
+      {/* Carrusel */}
+      <div className="flex-1 flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center w-full md:w-3/4 lg:w-1/2 xl:w-3/4 p-1 relative">
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer" onClick={handlePrevClick}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </div>
+          <div className="w-full h-64 bg-cover bg-center rounded-lg cursor-pointer mb-4" style={{ backgroundImage: `url(${images[activeIndex].url})` }} onClick={() => handleImageClick(activeIndex)} title={images[activeIndex].alt} />
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer" onClick={handleNextClick}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </div>
         </div>
-      ) : (
-        <>
-          <div className="card mx-auto shadow-lg mb-5">
-            <div className="card-body">
-              <h1 className="card-title text-center mb-4">Reservar Sala</h1>
-              <form onSubmit={handleReservaSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="nombre" className="form-label">Nombre Completo</label>
-                  <input type="text" className="form-control" id="nombre" value={usuarioActual.nombre} disabled />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="celular" className="form-label">Celular</label>
-                  <input type="tel" className="form-control" name="celular" value={formReserva.celular} onChange={handleReservaChange} required />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="sala" className="form-label">Sala</label>
-                  <select className="form-select" name="salaId" value={formReserva.salaId} onChange={handleReservaChange} required>
-                    {salas.map((sala) => (
-                      <option key={sala.id} value={sala.id}>{`${sala.nombre} - Capacidad: ${sala.capacidad}`}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="fecha" className="form-label">Fecha</label>
-                  <input type="date" className="form-control" name="fecha" value={formReserva.fecha} onChange={handleReservaChange} required />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="hora" className="form-label">Hora</label>
-                  <input type="time" className="form-control" name="hora" value={formReserva.hora} onChange={handleReservaChange} required />
-                </div>
-                <div className="d-grid">
-                  <button type="submit" className="btn btn-primary">Reservar Sala</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="card mx-auto shadow-lg">
-            <div className="card-body">
-              <h2 className="card-title text-center mb-4">Salas Disponibles</h2>
-              <ul className="list-group">
-                {salas.map((sala) => (
-                  <li key={sala.id} className="list-group-item">
-                    <div>
-                      <strong>{sala.nombre}</strong> (Capacidad: {sala.capacidad}, Ubicación: {sala.ubicacion})
-                      {sala.reservas.map((r, index) => (
-                        <div key={index}>
-                          <em>Reservada el {r.fecha} a las {r.hora}</em>
-                        </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </>
-      )}
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-200 text-gray-600 p-4 text-center">
+        <p>Nuestra información de contacto:</p>
+        <p>Teléfono: 123456789</p>
+        <p>Correo electrónico: ejemplo@ejemplo.com</p>
+        <p>Dirección: Calle Ejemplo, 123</p>
+      </footer>
     </div>
   );
 };
