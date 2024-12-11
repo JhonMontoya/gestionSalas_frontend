@@ -22,7 +22,7 @@ export default function NavBar() {
                 <SearchBar />
                 <Box className="navbar-buttons">
                     <Button color="inherit" className="navbar-button">
-                        Iniciar Sesión
+                        Iniciar Sesion
                     </Button>
                     <Button color="inherit" variant="outlined" className="navbar-button">
                         Registro
