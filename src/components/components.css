@@ -1,0 +1,50 @@
+.navbar {
+    background-color: #d219c9;
+}
+
+.navbar-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    width: 60px;
+}
+
+.logo-image {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-button {
+    margin-right: 10px;
+    border-color: white;
+    color: white;
+}
+/*---------- SEARCH BAR -------------*/
+.search-bar {
+    background-color: white;
+    border-radius: 8px;
+    max-width: 400px;
+}
+
+.search-bar .MuiOutlinedInput-root {
+    padding-left: 8px;
+}
+
+.search-bar .MuiOutlinedInput-root:hover {
+    border-color: #1565c0; 
+}
+
+.search-bar .MuiOutlinedInput-root.Mui-focused {
+    border-color: #0d47a1; 
+}
+
