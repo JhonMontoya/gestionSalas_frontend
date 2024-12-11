@@ -62,7 +62,7 @@ const App = () => {
 
       {/* Carrusel */}
       <div className="flex-1 flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center w-full md:w-3/4 lg:w-1/2 xl:w-3/4 p-1 relative">
+      <div className="flex justify-center items-center h-[600px] w-full max-w-[1600px] mx-auto px-1 relative">
           <div className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer" onClick={handlePrevClick}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
