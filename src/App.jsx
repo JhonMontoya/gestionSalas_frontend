@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
+import Registro from './registro';
+import IniciarSesion from './IniciarSesion';
 
 const App = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showRegistro, setShowRegistro] = useState(false);
+  const [showIniciarSesion, setShowIniciarSesion] = useState(false);
 
   const images = [
     { 
@@ -31,12 +35,33 @@ const App = () => {
     setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
+  const handleRegistroClick = () => {
+    setShowRegistro(true);
+  };
+
+  const handleIniciarSesionClick = () => {
+    setShowIniciarSesion(true);
+  };
+
+  const handleVolverClick = () => {
+    setShowIniciarSesion(false);
+    setShowRegistro(false);
+  };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       handleNextClick();
     }, 15000);
     return () => clearInterval(intervalId);
   }, []);
+
+  if (showIniciarSesion) {
+    return <IniciarSesion onVolverClick={handleVolverClick} />;
+  }
+
+  if (showRegistro) {
+    return <Registro onVolverClick={handleVolverClick} />;
+  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -51,24 +76,31 @@ const App = () => {
           className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2 pl-10 text-lg border border-gray-200 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
         />
         <div className="flex items-center">
-          <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg mr-2">
+          <button
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg mr-2"
+            onClick={handleIniciarSesionClick}
+          >
             Iniciar sesión
           </button>
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
+          <button 
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+            onClick={handleRegistroClick}
+          >
             Registrarse
           </button>
         </div>
       </nav>
 
       {/* Carrusel */}
+      {/* Carrusel */}
       <div className="flex-1 flex justify-center items-center">
-      <div className="flex justify-center items-center h-[600px] w-full max-w-[1600px] mx-auto px-1 relative">
+        <div className="flex justify-center items-center w-full max-w-[1600px] mx-auto px-1 relative">
           <div className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer" onClick={handlePrevClick}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </div>
-          <div className="w-full h-64 bg-cover bg-center rounded-lg cursor-pointer mb-4" style={{ backgroundImage: `url(${images[activeIndex].url})` }} onClick={() => handleImageClick(activeIndex)} title={images[activeIndex].alt} />
+          <div className="w-full h-screen bg-cover bg-center rounded-lg cursor-pointer mb-4" style={{ backgroundImage: `url(${images[activeIndex].url})` }} onClick={() => handleImageClick(activeIndex)} title={images[activeIndex].alt} />
           <div className="absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer" onClick={handleNextClick}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

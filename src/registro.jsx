@@ -1,39 +1,68 @@
 import { useState } from 'react';
 
-const Registro = () => {
+const Registro = ({ onVolverClick }) => { // Recibimos la función como prop
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [cedulaCiudadania, setCedulaCiudadania] = useState('');
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registro exitoso');
+
+    const datos = {
+      nombreCompleto,
+      cedulaCiudadania,
+      usuario,
+      contrasena,
+    };
+
+    try {
+      const respuesta = await fetch('http://localhost:3000/usuarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos),
+      });
+
+      if (respuesta.ok) {
+        const resultado = await respuesta.json();
+        console.log('Registro exitoso:', resultado);
+        alert('Registro exitoso');
+      } else {
+        console.error('Error en el registro:', respuesta.statusText);
+        alert('Error en el registro');
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      alert('Hubo un error al conectar con el servidor.');
+    }
   };
 
   return (
     <div className="flex flex-col h-screen">
       <nav className="flex justify-between items-center bg-blue-500 text-white p-4">
         <div className="flex items-center">
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-14 h-14" />
+          <img src="../img/Logo.png" alt="logo" className='w-14' />
         </div>
-        <input
-          type="search"
-          placeholder="Buscar salas"
-          className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2 pl-10 text-lg border border-gray-200 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
-        />
         <div className="flex items-center">
           <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg mr-2">
             Iniciar sesión
           </button>
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+            onClick={onVolverClick} // Llamamos a la función de "Volver"
+          >
             Volver
           </button>
         </div>
       </nav>
 
       <div className="flex-1 flex justify-center items-center">
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full md:w-3/4 lg:w-1/2 xl:w-1/3 p-4 border-2 border-red-500 rounded-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col justify-center items-center w-full md:w-3/4 lg:w-1/2 xl:w-1/3 p-4 border-2 border-red-500 rounded-lg"
+        >
           <h2 className="text-2xl font-bold mb-4">Registro</h2>
           <input
             type="text"
@@ -63,7 +92,10 @@ const Registro = () => {
             value={contrasena}
             onChange={(e) => setContrasena(e.target.value)}
           />
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg" type="submit">
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+            type="submit"
+          >
             Registrarse
           </button>
         </form>
@@ -80,3 +112,4 @@ const Registro = () => {
 };
 
 export default Registro;
+
