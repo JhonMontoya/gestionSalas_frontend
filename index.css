@@ -1,35 +1,3 @@
-
-/* Estilos para el contenido */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* Estilos de la tarjeta */
-.card {
-  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-  border-radius: 8px;
-  padding: 20px;
-  max-width: 500px;
-}
-
-/* Colores personalizados */
-.text-madera {
-  color: #5a3e2b; /* Marrón oscuro */
-}
-
-.btn-madera {
-  background-color: #8b5a2b; /* Botón marrón */
-  color: white;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-madera:hover {
-  background-color: #6b4423; /* Marrón más oscuro */
-}
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
