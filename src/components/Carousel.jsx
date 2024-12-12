@@ -10,8 +10,8 @@ import {
   Stack,
   Badge,
 } from "@mui/material";
-import { getHalls } from "../services/http.controller";
 import PersonIcon from "@mui/icons-material/Person";
+import axios from "axios";
 
 export default function Carousel(auth) {
   const user = auth.auth;
@@ -21,7 +21,8 @@ export default function Carousel(auth) {
 
   useEffect(() => {
     const fetchRooms = async () => {
-      const data = await getHalls();
+      const datajson = await axios.get("http://localhost:3000/salas");
+      const data = datajson.data;
 
       if (!data) {
         setLoading(false);
