@@ -32,7 +32,7 @@ export default function Carousel() {
   return (
     <Box sx={{ width: "100%", maxWidth: "1200px", margin: "0 auto", mt: 4 }}>
       <Typography variant="h5" align="center" gutterBottom sx={{color: "#fd993b", fontFamily:"'serif',fantasy", fontWeight: "bold"}}>
-        Salas
+        Nuestras Salas
       </Typography>
 
        <Stack direction="row" spacing={4} justifyContent="center" flexWrap="wrap">
