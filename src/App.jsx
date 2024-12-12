@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import Registro from './registro';
 import IniciarSesion from './IniciarSesion';
@@ -117,29 +116,6 @@ const App = () => {
         <p>Dirección: Calle Ejemplo, 123</p>
       </footer>
     </div>
-=======
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
-import NavBar from './components/Navbar';
-import Footer from './components/Footer'
-
-import Home from './pages/Home';
-import Register from './pages/Register';
-
-
-function App(){
-  return (
-    <Router>
-      <NavBar>
-      </NavBar>
-      
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/register" element={<Register/>}/>
-      </Routes>
-      <Footer/>
-    </Router>
->>>>>>> jhonathan
   );
 };
 
