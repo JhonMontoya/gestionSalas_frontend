@@ -23,7 +23,11 @@ export default function ButtonAppBar() {
             variant="outlined"
             color="inherit"
             startIcon={<AccountCircleIcon />}
-            >Acceder</Button>
+            >
+            <Link to = "/acces" style={{textDecoration:'none'}}>
+              Acceder
+            </Link>
+            </Button>
         </Toolbar>
       </AppBar>
     </Box>
