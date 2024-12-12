@@ -24,7 +24,7 @@ export default function NavBar() {
             color="inherit"
             startIcon={<AccountCircleIcon />}
             >
-            <Link to = "/acces" style={{textDecoration:'none'}}>
+            <Link to = "/user" style={{textDecoration:'none'}}>
               Acceder
             </Link>
             </Button>
