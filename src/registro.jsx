@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios'; // Importamos Axios
 
-const Registro = ({ onVolverClick }) => { // Recibimos la función como prop
+const Registro = ({ onVolverClick, onIniciarSesionClick }) => { // Añadimos la prop para manejar "Iniciar sesión"
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [cedulaCiudadania, setCedulaCiudadania] = useState('');
   const [usuario, setUsuario] = useState('');
@@ -17,24 +19,17 @@ const Registro = ({ onVolverClick }) => { // Recibimos la función como prop
     };
 
     try {
-      const respuesta = await fetch('http://localhost:3000/usuarios', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datos),
-      });
+      const respuesta = await axios.post('http://localhost:3000/usuarios', datos);
 
-      if (respuesta.ok) {
-        const resultado = await respuesta.json();
-        console.log('Registro exitoso:', resultado);
+      if (respuesta.status === 201) { // Código 201 para creación exitosa
+        console.log('Registro exitoso:', respuesta.data);
         alert('Registro exitoso');
       } else {
         console.error('Error en el registro:', respuesta.statusText);
         alert('Error en el registro');
       }
     } catch (error) {
-      console.error('Error de red:', error);
+      console.error('Error de red:', error.response || error.message);
       alert('Hubo un error al conectar con el servidor.');
     }
   };
@@ -46,12 +41,15 @@ const Registro = ({ onVolverClick }) => { // Recibimos la función como prop
           <img src="../img/Logo.png" alt="logo" className='w-14' />
         </div>
         <div className="flex items-center">
-          <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg mr-2">
+          <button
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg mr-2"
+            onClick={onIniciarSesionClick} // Llamamos la función para mostrar "Iniciar Sesión"
+          >
             Iniciar sesión
           </button>
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
-            onClick={onVolverClick} // Llamamos a la función de "Volver"
+            onClick={onVolverClick}
           >
             Volver
           </button>
@@ -73,7 +71,7 @@ const Registro = ({ onVolverClick }) => { // Recibimos la función como prop
           />
           <input
             type="number"
-            placeholder="Cedula de Ciudadanía"
+            placeholder="Cédula de Ciudadanía"
             className="w-full p-2 pl-10 text-lg border border-gray-200 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 mb-4"
             value={cedulaCiudadania}
             onChange={(e) => setCedulaCiudadania(e.target.value)}
@@ -111,5 +109,10 @@ const Registro = ({ onVolverClick }) => { // Recibimos la función como prop
   );
 };
 
-export default Registro;
+// Validamos las props con PropTypes
+Registro.propTypes = {
+  onVolverClick: PropTypes.func.isRequired,
+  onIniciarSesionClick: PropTypes.func.isRequired, // Validación para la nueva prop
+};
 
+export default Registro;

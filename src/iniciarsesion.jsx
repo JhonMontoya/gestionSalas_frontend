@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types'; // Importa PropTypes
 
 const IniciarSesion = ({ onVolverClick }) => {
   const [usuario, setUsuario] = useState('');
@@ -79,4 +80,10 @@ const IniciarSesion = ({ onVolverClick }) => {
   );
 };
 
+// Validación de las props
+IniciarSesion.propTypes = {
+  onVolverClick: PropTypes.func.isRequired, // Asegúrate de que onVolverClick es una función
+};
+
 export default IniciarSesion;
+

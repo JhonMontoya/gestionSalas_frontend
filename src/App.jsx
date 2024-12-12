@@ -92,7 +92,6 @@ const App = () => {
       </nav>
 
       {/* Carrusel */}
-      {/* Carrusel */}
       <div className="flex-1 flex justify-center items-center">
         <div className="flex justify-center items-center w-full max-w-[1600px] mx-auto px-1 relative">
           <div className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer" onClick={handlePrevClick}>
