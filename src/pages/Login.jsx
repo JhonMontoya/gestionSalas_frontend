@@ -59,9 +59,10 @@ export default function Login ({ onLogin }) {
       password: formData.password,
     };
     try {
-      const response = await axios.post("http://localhost:3000/usuarios", newUser);
+      const response = await axios.post("http://localhost:3000/usuarios/register", newUser);
       if (response.status === 201) {
-        alert("Usuario creado exitosamente");
+        //alert("Usuario creado exitosamente");
+        onLogin(response.data);
       } else {
         alert("Error al registrar el usuario. Por favor, intenta nuevamente.");
       }
@@ -78,9 +79,9 @@ export default function Login ({ onLogin }) {
     };
   
     try {
-      const response = await axios.post("http://localhost:3000/login", credentials);
+      const response = await axios.post("http://localhost:3000/usuarios/login", credentials);
       if (response.status === 200) {
-        alert("Inicio de sesión exitoso");
+        //alert("Inicio de sesión exitoso");
         onLogin(response.data);
       } else {
         alert("Por favor, verifica tu correo y contraseña.");
@@ -170,7 +171,7 @@ export default function Login ({ onLogin }) {
             />
           )}
           <button type="submit">
-            {isRegistering ? "Registrar" : "Iniciar sesión"}
+              {isRegistering ? ("Registrar") : "Iniciar sesión"}
           </button>
         </form>
         <p>

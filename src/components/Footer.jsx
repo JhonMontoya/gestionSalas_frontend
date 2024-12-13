@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 import React from 'react';
 import { AppBar, Toolbar, Box, IconButton, Typography } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';

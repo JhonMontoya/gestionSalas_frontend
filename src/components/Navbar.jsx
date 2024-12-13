@@ -8,7 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import logo from "../assets/Logo.png";
 
-export default function ButtonAppBar() {
+export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor: "#8787f5"}}>
@@ -24,7 +24,7 @@ export default function ButtonAppBar() {
             color="inherit"
             startIcon={<AccountCircleIcon />}
             >
-            <Link to = "/acces" style={{textDecoration:'none'}}>
+            <Link to = "/user" style={{textDecoration:'none'}}>
               Acceder
             </Link>
             </Button>
