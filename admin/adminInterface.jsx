@@ -14,11 +14,12 @@ const RoomManager = () => {
   const [location, setLocation] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState
+  (true);
   const [newRoom, setNewRoom] = useState({
     name: nameRoom,
     capacity: capacity,
-    location: location
+    location: location,
     status: status
   });
 
