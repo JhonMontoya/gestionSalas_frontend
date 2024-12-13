@@ -1,6 +1,6 @@
 //eslint-disable-next-line
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import logo from "../assets/Logo.png";
 import {
@@ -15,6 +15,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
+import DateRange from "./DateRange";
 
 const settings = [
   { key: 1, label: "Perfil" },
@@ -24,6 +25,7 @@ const settings = [
 ];
 
 export default function ButtonAppBar() {
+  const navigate = useNavigate();
   //aqui se debe setear el usuario que este logeado.
   //manejarlo con un estado como redux o sustand o con un localStorage.
   const user = {
@@ -45,6 +47,10 @@ export default function ButtonAppBar() {
 
   const handleCloseUserMenu = () => {
     setUserMenu(null);
+  };
+
+  const goToBooking = () => {
+    navigate("/booking");
   };
 
   return (
@@ -69,11 +75,15 @@ export default function ButtonAppBar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
+                onClick={goToBooking}
               >
                 <Typography sx={{ textAlign: "center" }}>
                   Crear reservas
                 </Typography>
               </IconButton>
+            </Box>
+            <Box>
+              <DateRange />
             </Box>
             <Tooltip title="Abrir configuración">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
