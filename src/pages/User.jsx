@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import{Box} from '@mui/material'
 import Login from "./Login";
+import Carousel from "../components/Carousel";
+import NavBarUser from "../components/NavbarUser";;
 
 export default function User() {
   const [user, setUser] = useState(null);
@@ -7,16 +10,19 @@ export default function User() {
   const handleLogin = (userData) => {
     setUser(userData);
     //localStorage.setItem("userToken", userData.token); 
-    console.log("Usuario autenticado:", userData);
   };
 
   return (
-    <div>
+    <Box>
       {!user ? (
         <Login onLogin={handleLogin} />
       ) : (
-        <h1>Bienvenido, {user.name}!</h1>
+        <>
+          <NavBarUser user ={user}></NavBarUser>
+          <Carousel auth={user}></Carousel>
+        </>
       )}
-    </div>
+    </Box>
+      
   );
 };
