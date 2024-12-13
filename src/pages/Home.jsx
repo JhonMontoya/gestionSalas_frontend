@@ -2,13 +2,10 @@
 import React from "react";
 import {Box, Typography} from '@mui/material';
 import Card from "../components/Card";
-import NavBar from '../components/Navbar';
 
 export default function Home() {
   return (
      <Box>
-      <NavBar>
-      </NavBar>
      <Typography variant="h5" 
      sx={{
       textAlign: 'center',
