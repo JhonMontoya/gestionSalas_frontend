@@ -41,7 +41,7 @@ const CreateBooking = ({ onSubmit, message, states, actions, halls }) => {
         required
       >
         {halls.map((hall) => (
-          <MenuItem value={hall.id}>{hall.name}</MenuItem>
+          <MenuItem key={hall._id} value={hall._id}>{hall.name}</MenuItem>
         ))}
       </TextField>
 

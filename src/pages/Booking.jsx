@@ -14,35 +14,25 @@ export const Booking = () => {
 
   useEffect(() => {
     const fetchRooms = async () => {
-      //const data = await getHalls();
-      const data = [
-        {
-          name: "sala 1",
-          id: "dmfklmdslfn",
-          status: "disponible",
-        },
-        {
-          name: "sala fg",
-          id: "djfkdfns",
-          status: "no disponible",
-        },
-        {
-          name: "sala 4",
-          id: "djkfghsdfk",
-          status: "disponible",
-        },
-      ];
+      try {
+        const response = await fetch("http://localhost:3000/salas");
+        const data = await response.json();
 
-      if (!data) {
-        return;
-      } else {
-        setHalls(data.filter((d) => d.status === "disponible"));
+        if (response.ok) {
+          // Filtra solo las salas disponibles
+          setHalls(data.filter((d) => d.status === "disponible"));
+        } else {
+          console.error("Error al obtener las salas:", data.message);
+        }
+      } catch (error) {
+        console.error("Error en la solicitud de salas:", error);
       }
     };
 
     fetchRooms();
   }, []);
 
+  
   //Simulaciòn del usuario logueado
   const user = { name: "Ana", id: "123" };
 
