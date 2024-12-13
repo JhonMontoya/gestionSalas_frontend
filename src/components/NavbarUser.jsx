@@ -1,8 +1,7 @@
 //eslint-disable-next-line
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 import logo from "../assets/Logo.png";
 import {
   AppBar,
@@ -16,7 +15,6 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import DateRange from "./DateRange";
 
 const settings = [
   { key: 1, label: "Perfil" },
@@ -25,21 +23,7 @@ const settings = [
   { key: 4, label: "Cerrar sesion" },
 ];
 
-export default function ButtonAppBar() {
-  const navigate = useNavigate();
-  //aqui se debe setear el usuario que este logeado.
-  //manejarlo con un estado como redux o sustand o con un localStorage.
-  const user = {
-    id: "674d47dcc5d0b949e5fe20f1",
-    name: "Duvan Camilo Zapata",
-    email: "prueba@email.com",
-    thumnail:
-      "https://media.glamour.mx/photos/65b096f13756393e0200c63d/16:9/w_1920,c_limit/que-significa-tu-foto-de-perfil.jpg",
-    role: "single",
-    //password: "$2a$10$PDH8l8ZLpdiZJtbKK3cA/.iXQcvBhSF7mb4deMswd/aeHGIp0lpWC",
-    v: 0,
-  };
-
+export default function ButtonAppBar({user}) {
   const [userMenu, setUserMenu] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -50,9 +34,6 @@ export default function ButtonAppBar() {
     setUserMenu(null);
   };
 
-  const goToBooking = () => {
-    navigate("/booking");
-  };
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#8787f5" }}>
@@ -76,20 +57,20 @@ export default function ButtonAppBar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
-                onClick={goToBooking}
               >
                 <Typography sx={{ textAlign: "center" }}>
                   Crear reservas
                 </Typography>
               </IconButton>
             </Box>
-            <Box>
-              <DateRange />
-            </Box>
             <Tooltip title="Abrir configuración">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar src={user ? user.thumnail : <AccountCircleIcon />} />
+                <Typography variant="p" sx={{fontSize: '15px'}}>
+                {user.name}
+                </Typography>
               </IconButton>
+             
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
