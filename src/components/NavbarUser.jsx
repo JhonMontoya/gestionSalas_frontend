@@ -23,7 +23,7 @@ const settings = [
   { key: 4, label: "Cerrar sesion" },
 ];
 
-export default function ButtonAppBar({user}) {
+export default function ButtonAppBar({ user }) {
   const [userMenu, setUserMenu] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -33,7 +33,6 @@ export default function ButtonAppBar({user}) {
   const handleCloseUserMenu = () => {
     setUserMenu(null);
   };
-
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#8787f5" }}>
@@ -66,11 +65,10 @@ export default function ButtonAppBar({user}) {
             <Tooltip title="Abrir configuración">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar src={user ? user.thumnail : <AccountCircleIcon />} />
-                <Typography variant="p" sx={{fontSize: '15px'}}>
-                {user.name}
+                <Typography variant="p" sx={{ fontSize: "15px" }}>
+                  {user.name}
                 </Typography>
               </IconButton>
-             
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}

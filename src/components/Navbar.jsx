@@ -23,12 +23,12 @@ const settings = [
   { key: 2, label: "Cuenta" },
   { key: 3, label: "Iniciar sesion" },
   { key: 4, label: "Cerrar sesion" },
+  { key: 5, label: "Filtrar por fecha" },
 ];
 
 export default function ButtonAppBar() {
   const navigate = useNavigate();
-  //aqui se debe setear el usuario que este logeado.
-  //manejarlo con un estado como redux o sustand o con un localStorage.
+
   const user = {
     id: "674d47dcc5d0b949e5fe20f1",
     name: "Duvan Camilo Zapata",
@@ -36,11 +36,10 @@ export default function ButtonAppBar() {
     thumnail:
       "https://media.glamour.mx/photos/65b096f13756393e0200c63d/16:9/w_1920,c_limit/que-significa-tu-foto-de-perfil.jpg",
     role: "single",
-    //password: "$2a$10$PDH8l8ZLpdiZJtbKK3cA/.iXQcvBhSF7mb4deMswd/aeHGIp0lpWC",
-    v: 0,
   };
 
   const [userMenu, setUserMenu] = useState(null);
+  const [showDateFilter, setShowDateFilter] = useState(false); // Estado para mostrar el filtro por fecha
 
   const handleOpenUserMenu = (event) => {
     setUserMenu(event.currentTarget);
@@ -48,6 +47,11 @@ export default function ButtonAppBar() {
 
   const handleCloseUserMenu = () => {
     setUserMenu(null);
+  };
+
+  const handleDateFilter = () => {
+    setShowDateFilter(!showDateFilter); // Alternar visibilidad del filtro por fecha
+    handleCloseUserMenu(); // Cerrar el menú después de seleccionar
   };
 
   const goToBooking = () => {
@@ -83,9 +87,6 @@ export default function ButtonAppBar() {
                 </Typography>
               </IconButton>
             </Box>
-            <Box>
-              <DateRange />
-            </Box>
             <Tooltip title="Abrir configuración">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar src={user ? user.thumnail : <AccountCircleIcon />} />
@@ -109,9 +110,11 @@ export default function ButtonAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem
-                  disabled={user ? setting.key === 3 : setting.key === 4}
                   key={setting.key}
-                  onClick={handleCloseUserMenu}
+                  disabled={user ? setting.key === 3 : setting.key === 4}
+                  onClick={
+                    setting.key === 5 ? handleDateFilter : handleCloseUserMenu
+                  } // Activar filtro por fecha
                 >
                   <Typography sx={{ textAlign: "center" }}>
                     {setting.label}
@@ -121,6 +124,17 @@ export default function ButtonAppBar() {
             </Menu>
           </Toolbar>
         </Box>
+        {showDateFilter && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
+          >
+            <DateRange />
+          </Box>
+        )}
       </Container>
     </AppBar>
   );
