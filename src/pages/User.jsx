@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import Link from "react-router-dom";
 import{Box} from '@mui/material'
 import Login from "./Login";
 import Carousel from "../components/Carousel";
@@ -20,6 +21,7 @@ export default function User() {
         <>
           <NavBarUser user ={user}></NavBarUser>
           <Carousel auth={user}></Carousel>
+          {user.role === 'Admin' && < Link to ='/Admin'></Link>}
         </>
       )}
     </Box>
