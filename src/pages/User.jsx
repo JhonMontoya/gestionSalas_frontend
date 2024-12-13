@@ -1,9 +1,10 @@
 import { useState } from "react";
-import Link from "react-router-dom";
 import{Box} from '@mui/material'
 import Login from "./Login";
-import Carousel from "../components/Carousel";
-import NavBarUser from "../components/NavbarUser";;
+import CardClient from "../components/CardClient";
+import NavBarUser from "../components/NavbarClient";
+import AdminInterface from "./AdminInterface";
+
 
 export default function User() {
   const [user, setUser] = useState(null);
@@ -13,18 +14,24 @@ export default function User() {
     //localStorage.setItem("userToken", userData.token); 
   };
 
-  return (
+  if(!user){
+    return(
+      <Box>
+        <Login onLogin={handleLogin}/>
+      </Box>
+    );
+  }
+  
+  if(user.role==="Admin"){
+    return(
+      <AdminInterface user={user}></AdminInterface>
+    );
+  }
+
+  return(
     <Box>
-      {!user ? (
-        <Login onLogin={handleLogin} />
-      ) : (
-        <>
-          <NavBarUser user ={user}></NavBarUser>
-          <Carousel auth={user}></Carousel>
-          {user.role === 'Admin' && < Link to ='/Admin'></Link>}
-        </>
-      )}
+      <NavBarUser user ={user}></NavBarUser>
+      <CardClient auth={user}></CardClient>
     </Box>
-      
   );
 };

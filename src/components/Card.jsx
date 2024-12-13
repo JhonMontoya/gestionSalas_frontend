@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent, CardMedia, Box, CircularProgress, Typography, Stack } from "@mui/material";
 
@@ -42,11 +42,12 @@ export default function Carousel() {
               <CardMedia
                 component="img"
                 height="200"
-                image={room.url} // Asumiendo que cada imagen tiene una propiedad 'url'
+                image={room.url} 
                 alt={`${room.name}`}
               />
               <CardContent>
-                <Typography variant="h6" component="div">
+                <Typography variant="h6" component="div" sx={{textAlign: 'center', color:"#f58405"
+                }}>
                   {room.name}
                 </Typography>
               </CardContent>
