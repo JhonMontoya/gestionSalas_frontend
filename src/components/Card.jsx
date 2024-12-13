@@ -42,7 +42,7 @@ export default function Carousel() {
               <CardMedia
                 component="img"
                 height="200"
-                image={room.url} // Asumiendo que cada imagen tiene una propiedad 'url'
+                image={room.url}
                 alt={`${room.name}`}
               />
               <CardContent>
