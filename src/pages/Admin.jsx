@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, TextField, Button, Alert,MenuItem } from '@mui/material';
+import { Box, Typography, TextField, Button, Alert, MenuItem } from '@mui/material';
 import NavBar from '../components/Navbar';
 
 function RoomManager() {
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     capacity: '',
     location: '',
     status: '',
-    url: 'https://planner5d.com/blog/content/images/2022/06/sidekix-media-iu4K1XPnNAY-unsplash.jpg',
+    url: '',
   });
-  const [errorMessage, setErrorMessage] = useState('');
+ 
 
   const addRoom = async () => {
     try {
@@ -61,12 +62,6 @@ function RoomManager() {
           onChange={(e) => setFormData({ ...formData, location: e.target.value })}
           sx={{ m: 1, width: '300px' }}
         />
-        {/* <TextField
-          label="Estado"
-          value={formData.status}
-          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-          sx={{ m: 1, width: '300px' }}
-        /> */}
         <TextField
           label="Estado"
           select
