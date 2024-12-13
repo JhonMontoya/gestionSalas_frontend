@@ -42,11 +42,12 @@ export default function Carousel() {
               <CardMedia
                 component="img"
                 height="200"
-                image={room.url}
+                image={room.url} 
                 alt={`${room.name}`}
               />
               <CardContent>
-                <Typography variant="h6" component="div">
+                <Typography variant="h6" component="div" sx={{textAlign: 'center', color:"#f58405"
+                }}>
                   {room.name}
                 </Typography>
               </CardContent>
