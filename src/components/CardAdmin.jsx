@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardContent, CardMedia, Box, CircularProgress, Typography, Stack } from "@mui/material";
+import { Card, CardActions, CardContent, CardMedia, Box, CircularProgress, Typography, Stack, Button} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+const API_URL="http://localhost:3000/salas";
 
 export default function CardAdmin() {
   const [rooms, setRooms] = useState([]);
@@ -9,7 +13,7 @@ export default function CardAdmin() {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/salas");
+        const response = await axios.get(API_URL);
         setRooms(response.data); 
         setLoading(false);
       } catch (error) {
@@ -20,6 +24,19 @@ export default function CardAdmin() {
 
     fetchRooms();
   }, []);
+
+  const handleDeleteRoom = async(roomId)=>{
+   
+    try {
+      const response = await axios.delete(`${API_URL}/${roomId}`);
+      console.log(response.data);
+      setRooms((prevRooms) => prevRooms.filter((room) => room._id !== roomId));
+      alert("Sala eliminada exitosamente");
+    } catch (error) {
+      console.error("Error al eliminar la sala:", error);
+      alert("Error al eliminar la sala. Intente nuevamente.");
+    }
+  };
 
   if (loading) {
     return (
@@ -51,6 +68,10 @@ export default function CardAdmin() {
                     {room.name}
                   </Typography>
                 </CardContent>
+                <CardActions>
+                  <Button variant="contained" startIcon={<CloudUploadIcon />} size="medium">Editar</Button>
+                  <Button variant="outlined" startIcon={<DeleteIcon />} size="medium" color="error" onClick={() =>{ handleDeleteRoom(room._id)}} >Eliminar</Button>
+                </CardActions>
               </Card>
             </Box>
           ))}
@@ -59,4 +80,3 @@ export default function CardAdmin() {
   </Box>
   );
 }
-  
